@@ -773,6 +773,7 @@ const API_BASE_URL = window.location.hostname === 'localhost' || window.location
 // State Management
 let currentSessionId = null;
 let currentProjectId = null;
+let chatStarted = false;
 
 // Tab Navigation
 const chatView = document.getElementById('chat-view');
@@ -950,8 +951,6 @@ if (inputField) {
 }
 
 // ── WELCOME HIDE ──
-const welcomeScreen = document.getElementById('welcome-screen');
-let chatStarted = false;
 function hideWelcome() {
   if (welcomeScreen) {
     welcomeScreen.classList.add('hiding');
