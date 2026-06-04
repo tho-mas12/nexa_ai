@@ -234,6 +234,125 @@
     }
     .pill:hover { background: #f5aece; transform: translateY(-2px); }
     .pill svg { width: 16px; height: 16px; stroke: var(--text-dark); fill: none; stroke-width: 1.8; flex-shrink: 0; }
+
+    /* Mobile Bottom Navigation */
+    .mobile-nav {
+      display: none;
+      background: var(--pink-bg);
+      border-top: 1px solid #ede9f6;
+      height: 65px;
+      justify-content: space-around;
+      align-items: center;
+      flex-shrink: 0;
+      z-index: 100;
+    }
+    .mobile-nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.2rem;
+      color: var(--text-mid);
+      cursor: pointer;
+      flex: 1;
+      height: 100%;
+      font-size: 0.72rem;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+    .mobile-nav-item.active {
+      color: var(--purple);
+    }
+    .mobile-nav-icon {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+      }
+      .app-shell {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: 100vh !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        flex-direction: column !important;
+      }
+      .sidebar {
+        display: none !important;
+      }
+      .mobile-nav {
+        display: flex !important;
+      }
+      .main {
+        padding: 1rem 1.25rem 1.5rem !important;
+        justify-content: flex-start !important;
+      }
+      .topbar {
+        margin-bottom: 2rem !important;
+      }
+      .greeting-sub {
+        display: none; /* Hide subtitle to save space */
+      }
+      .hero-section {
+        margin-top: 0 !important;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 1.5rem;
+      }
+      .robot-wrap {
+        width: auto !important;
+        text-align: center;
+      }
+      .hero-image {
+        width: 220px !important;
+        max-width: 60% !important;
+        margin-top: 0 !important;
+      }
+      .eye {
+        display: none !important; /* Hide moving eyes on mobile to avoid misalignment */
+      }
+      .hero-text {
+        text-align: center !important;
+        margin: 0 !important;
+      }
+      .bottom-text {
+        font-size: 22px !important;
+        margin: 0 !important;
+        text-align: center !important;
+      }
+      .input-wrap {
+        padding: 0.8rem 1rem !important;
+        margin-bottom: 0.8rem !important;
+      }
+      .action-pills {
+        overflow-x: auto;
+        white-space: nowrap;
+        display: flex;
+        padding-bottom: 8px;
+        gap: 0.5rem !important;
+        width: 100%;
+        scrollbar-width: none; /* Firefox */
+      }
+      .action-pills::-webkit-scrollbar {
+        display: none; /* Chrome/Safari */
+      }
+      .pill {
+        flex: 0 0 auto !important;
+        padding: 0.6rem 1.2rem !important;
+        font-size: 0.78rem !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -381,6 +500,26 @@
     </div>
 
   </main>
+
+  <!-- Mobile Bottom Navigation -->
+  <nav class="mobile-nav">
+     <div class="mobile-nav-item active" onclick="window.location.href='main.html'">
+        <svg class="mobile-nav-icon" viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>
+        <span>Home</span>
+     </div>
+     <div class="mobile-nav-item" onclick="window.location.href='chat.html?tab=chat'">
+        <svg class="mobile-nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <span>New Chat</span>
+     </div>
+     <div class="mobile-nav-item" onclick="window.location.href='chat.html?tab=projects'">
+        <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+        <span>Projects</span>
+     </div>
+     <div class="mobile-nav-item" onclick="window.location.href='chat.html?tab=recent'">
+        <svg class="mobile-nav-icon" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        <span>Recent</span>
+     </div>
+  </nav>
 
 </div>
 <script>

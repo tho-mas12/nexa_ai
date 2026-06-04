@@ -407,6 +407,153 @@ body {
 /* scrollbar */
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-thumb { background: var(--pink-btn); border-radius: 2px; }
+
+/* Mobile Bottom Navigation */
+.mobile-nav {
+  display: none;
+  background: var(--pink-bg);
+  border-top: 1px solid #ede9f6;
+  height: 65px;
+  justify-content: space-around;
+  align-items: center;
+  flex-shrink: 0;
+  z-index: 100;
+}
+.mobile-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  color: var(--text-mid);
+  cursor: pointer;
+  flex: 1;
+  height: 100%;
+  font-size: 0.72rem;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+.mobile-nav-item.active {
+  color: var(--purple);
+}
+.mobile-nav-icon {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+}
+
+@media (max-width: 768px) {
+  body {
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+  }
+  .app-shell {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 100vh !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    flex-direction: column !important;
+  }
+  .sidebar {
+    display: none !important;
+  }
+  .mobile-nav {
+    display: flex !important;
+  }
+  .main {
+    padding: 0 !important; /* Let children manage padding */
+  }
+  .topbar {
+    padding: 1.25rem 1.25rem 0.8rem !important;
+  }
+  .greeting-sub {
+    display: none;
+  }
+  
+  /* Chat Area responsiveness */
+  .chat-area {
+    padding: 1rem 1.25rem !important;
+    gap: 0.9rem !important;
+  }
+  .bubble-wrap {
+    max-width: 85% !important; /* wider bubbles on mobile */
+  }
+  .bubble {
+    padding: 0.7rem 0.9rem !important;
+    font-size: 0.82rem !important;
+    line-height: 1.5 !important;
+  }
+  
+  /* Input Area responsiveness */
+  .input-section {
+    padding: 0.5rem 1.25rem 1rem !important;
+  }
+  .input-wrap {
+    padding: 0.6rem 0.8rem 0.6rem 1rem !important;
+    border-radius: 1.25rem !important;
+    gap: 0.5rem !important;
+  }
+  .input-field {
+    font-size: 0.82rem !important;
+  }
+  
+  /* Action pills horizontal scroll */
+  .action-pills {
+    overflow-x: auto;
+    white-space: nowrap;
+    display: flex;
+    padding-bottom: 5px;
+    gap: 0.5rem !important;
+    width: 100%;
+    scrollbar-width: none; /* Firefox */
+  }
+  .action-pills::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+  }
+  .pill {
+    flex: 0 0 auto !important;
+    padding: 0.5rem 1rem !important;
+    font-size: 0.75rem !important;
+  }
+  
+  /* Suggestion Chips scroll */
+  .chips {
+    overflow-x: auto;
+    white-space: nowrap;
+    display: flex;
+    flex-wrap: nowrap !important;
+    padding-bottom: 3px;
+    gap: 0.4rem !important;
+    width: 100%;
+    scrollbar-width: none;
+  }
+  .chips::-webkit-scrollbar {
+    display: none;
+  }
+  .chip {
+    flex: 0 0 auto !important;
+  }
+  
+  /* Projects and Recent views padding */
+  #projects-view, #recent-view {
+    padding: 1.25rem 1.25rem !important;
+  }
+  
+  /* Welcome Screen robot size */
+  .welcome-robot {
+    width: 140px !important;
+  }
+  .welcome-text {
+    font-size: 1.25rem !important;
+  }
+  #welcome-screen {
+    padding-bottom: 60px !important;
+  }
+}
 </style>
 </head>
 <body>
@@ -575,6 +722,27 @@ body {
     </div>
 
   </main>
+
+  <!-- Mobile Bottom Navigation -->
+  <nav class="mobile-nav">
+     <div class="mobile-nav-item" id="m-nav-home">
+        <svg class="mobile-nav-icon" viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>
+        <span>Home</span>
+     </div>
+     <div class="mobile-nav-item active" id="m-nav-newchat">
+        <svg class="mobile-nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <span>New Chat</span>
+     </div>
+     <div class="mobile-nav-item" id="m-nav-projects">
+        <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+        <span>Projects</span>
+     </div>
+     <div class="mobile-nav-item" id="m-nav-recent">
+        <svg class="mobile-nav-icon" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        <span>Recent</span>
+     </div>
+  </nav>
+
 </div>
 
 <script>
@@ -599,6 +767,9 @@ document.querySelector(".logout-btn").addEventListener("click", () => {
   window.location.href = "login.html";
 });
 
+// Production API Configuration
+const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? '' : 'https://nexa-ai-909y.onrender.com';
+
 // State Management
 let currentSessionId = null;
 let currentProjectId = null;
@@ -613,9 +784,15 @@ const navNewChat = document.getElementById('nav-newchat');
 const navProjects = document.getElementById('nav-projects');
 const navRecent = document.getElementById('nav-recent');
 
+// Mobile Tab Navigation
+const mNavHome = document.getElementById('m-nav-home');
+const mNavNewChat = document.getElementById('m-nav-newchat');
+const mNavProjects = document.getElementById('m-nav-projects');
+const mNavRecent = document.getElementById('m-nav-recent');
+
 function switchTab(tab) {
-  // Reset active classes
-  [navHome, navNewChat, navProjects, navRecent].forEach(item => {
+  // Reset active classes for desktop and mobile navigation
+  [navHome, navNewChat, navProjects, navRecent, mNavHome, mNavNewChat, mNavProjects, mNavRecent].forEach(item => {
     if (item) item.classList.remove('active');
   });
   
@@ -625,23 +802,34 @@ function switchTab(tab) {
   recentView.style.display = 'none';
   
   if (tab === 'chat') {
-    navNewChat.classList.add('active');
+    if (navNewChat) navNewChat.classList.add('active');
+    if (mNavNewChat) mNavNewChat.classList.add('active');
     chatView.style.display = 'flex';
-    document.getElementById('input-field').focus();
+    const inputField = document.getElementById('input-field');
+    if (inputField) inputField.focus();
   } else if (tab === 'projects') {
-    navProjects.classList.add('active');
+    if (navProjects) navProjects.classList.add('active');
+    if (mNavProjects) mNavProjects.classList.add('active');
     projectsView.style.display = 'flex';
     loadProjects();
   } else if (tab === 'recent') {
-    navRecent.classList.add('active');
+    if (navRecent) navRecent.classList.add('active');
+    if (mNavRecent) mNavRecent.classList.add('active');
     recentView.style.display = 'flex';
     loadRecentChats();
   }
 }
 
 if (navHome) navHome.onclick = () => window.location.href = 'main.html';
-if (navNewChat) {
-  navNewChat.onclick = () => {
+if (mNavHome) mNavHome.onclick = () => window.location.href = 'main.html';
+
+if (mNavProjects) mNavProjects.onclick = () => switchTab('projects');
+if (mNavRecent) mNavRecent.onclick = () => switchTab('recent');
+
+const welcomeScreen = document.getElementById('welcome-screen');
+
+if (navNewChat || mNavNewChat) {
+  const handleNewChatClick = () => {
     currentSessionId = null;
     currentProjectId = null;
     chatArea.innerHTML = '';
@@ -665,6 +853,8 @@ if (navNewChat) {
 
     switchTab('chat');
   };
+  if (navNewChat) navNewChat.onclick = handleNewChatClick;
+  if (mNavNewChat) mNavNewChat.onclick = handleNewChatClick;
 }
 if (navProjects) navProjects.onclick = () => switchTab('projects');
 if (navRecent) navRecent.onclick = () => switchTab('recent');
@@ -908,7 +1098,7 @@ async function sendMessage(text) {
   showLoading();
 
   try {
-    const response = await fetch('/api/chat/message', {
+    const response = await fetch(`${API_BASE_URL}/api/chat/message`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -983,7 +1173,7 @@ async function loadRecentChats() {
   recentList.innerHTML = '<div style="color:var(--text-muted);">Loading conversations...</div>';
   
   try {
-    const res = await fetch('/api/chat/sessions', {
+    const res = await fetch(`${API_BASE_URL}/api/chat/sessions`, {
       headers: { 'Authorization': `Bearer ${token}` }
     });
     const sessions = await res.json();
@@ -1048,7 +1238,7 @@ async function deleteChatSession(e, sessionId) {
   if (!confirm('Are you sure you want to delete this chat history?')) return;
   
   try {
-    const res = await fetch(`/api/chat/sessions/${sessionId}`, {
+    const res = await fetch(`${API_BASE_URL}/api/chat/sessions/${sessionId}`, {
       method: 'DELETE',
       headers: { 'Authorization': `Bearer ${token}` }
     });
@@ -1068,7 +1258,7 @@ async function deleteChatSession(e, sessionId) {
 async function loadChatSession(sessionId) {
   showLoading();
   try {
-    const res = await fetch(`/api/chat/sessions/${sessionId}`, {
+    const res = await fetch(`${API_BASE_URL}/api/chat/sessions/${sessionId}`, {
       headers: { 'Authorization': `Bearer ${token}` }
     });
     const session = await res.json();
@@ -1114,7 +1304,7 @@ async function loadProjects() {
   grid.innerHTML = '<div style="color:var(--text-muted);">Loading projects...</div>';
   
   try {
-    const res = await fetch('/api/projects', {
+    const res = await fetch(`${API_BASE_URL}/api/projects`, {
       headers: { 'Authorization': `Bearer ${token}` }
     });
     const projects = await res.json();
@@ -1178,7 +1368,7 @@ document.getElementById('btn-create-project').onclick = async () => {
   const description = prompt('Enter project description (optional):') || '';
   
   try {
-    const res = await fetch('/api/projects/create', {
+    const res = await fetch(`${API_BASE_URL}/api/projects/create`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -1204,7 +1394,7 @@ async function deleteProject(e, projectId) {
   if (!confirm('Are you sure you want to delete this project? Chat histories inside this project will be kept but unlinked.')) return;
   
   try {
-    const res = await fetch(`/api/projects/${projectId}`, {
+    const res = await fetch(`${API_BASE_URL}/api/projects/${projectId}`, {
       method: 'DELETE',
       headers: { 'Authorization': `Bearer ${token}` }
     });

@@ -91,6 +91,8 @@ function createBubbleExplosion() {
    LOGIN
 ========================== */
 
+const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? '' : 'https://nexa-ai-909y.onrender.com';
+
 loginForm.addEventListener("submit", async function(e) {
   e.preventDefault();
 
@@ -108,7 +110,7 @@ loginForm.addEventListener("submit", async function(e) {
   createBubbleExplosion();
 
   try {
-    const response = await fetch('/api/auth/login', {
+    const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password })
