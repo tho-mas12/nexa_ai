@@ -18,8 +18,20 @@ CORS(app)
 # MongoDB Configuration
 MONGODB_URI = os.getenv("MONGODB_URI", "mongodb://localhost:27017/nexa-db")
 client = MongoClient(MONGODB_URI)
-# Extract database name from URI or default to nexa-db
-db_name = MONGODB_URI.split("/")[-1].split("?")[0] or "nexa-db"
+
+def get_database_name(uri, default="nexa-db"):
+    try:
+        path = uri.split("://", 1)[-1]
+        if "/" in path:
+            db_and_options = path.split("/", 1)[-1]
+            db_name = db_and_options.split("?", 1)[0]
+            if db_name:
+                return db_name
+    except Exception:
+        pass
+    return default
+
+db_name = get_database_name(MONGODB_URI)
 db = client[db_name]
 
 # JWT Secret
