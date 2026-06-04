@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NeXa – Smart Companion</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    :root {
+      --pink-bg:     #fce8f0;
+      --white-bg:    #ffffff;
+      --purple:      #a855f7;
+      --purple-light:#c084fc;
+      --pink-btn:    #f9c8dc;
+      --text-dark:   #1e1e2e;
+      --text-mid:    #6b6b80;
+      --text-muted:  #b0aec0;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f0e8f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+  
+    .app-shell {
+      display: flex;
+      width: 980px;
+      height: 610px;
+      border-radius: 2.2rem;
+      overflow: hidden;
+      box-shadow: 0 28px 72px rgba(168,85,247,.22);
+      background: var(--white-bg);
+    }
+
+  
+    .sidebar {
+      width: 225px;
+      background: var(--pink-bg);
+      display: flex;
+      flex-direction: column;
+      padding: 2rem 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .logo {
+      display: flex; align-items: center; gap: .55rem;
+      margin-bottom: 2.5rem;
+    }
+    .logo img {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+
+    .logo-icon {
+      width: 40px; height: 40px; border-radius: 11px;
+      background: linear-gradient(135deg, #f472b6, #a855f7);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 1.35rem; color: #fff; font-style: italic;
+    }
+
+    .logo-text { font-size: 1.3rem; font-weight: 800; color: var(--text-dark); }
+
+    .nav { list-style: none; display: flex; flex-direction: column; gap: .3rem; flex: 1; }
+    .nav-item {
+      display: flex; align-items: center; gap: .75rem;
+      padding: .65rem .9rem; border-radius: .75rem;
+      font-size: .95rem; font-weight: 600; color: var(--text-mid);
+      cursor: pointer; transition: background .2s, color .2s;
+      position: relative;
+    }
+    .nav-item:hover { background: rgba(168,85,247,.08); color: var(--purple); }
+    .nav-item.active { color: var(--purple); }
+    .nav-item.active::after {
+      content: ''; position: absolute; right: -1.5rem; top: 50%;
+      transform: translateY(-50%); width: 3px; height: 60%;
+      background: var(--purple); border-radius: 4px;
+    }
+    .nav-icon { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.8; flex-shrink: 0; }
+
+    .profile {
+      display: flex; align-items: center; gap: .75rem;
+      margin-top: auto; padding-top: 1.5rem;
+    }
+    .profile-label { font-weight: 700; font-size: .95rem; color: var(--text-dark); }
+    .avatar { width: 36px; height: 36px; border-radius: 50%; overflow: hidden; flex-shrink: 0; }
+
+  
+    .main {
+      flex: 1;
+      display: flex; flex-direction: column;
+      padding: 2rem 2.5rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .topbar {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      margin-bottom: auto;
+    }
+    .greeting-title {
+      font-size: .72rem; font-weight: 800;
+      letter-spacing: .12em; text-transform: uppercase; color: var(--text-dark);
+    }
+    .greeting-sub { font-size: .8rem; color: var(--text-muted); margin-top: .1rem; font-style: italic; }
+
+    .logout-btn {
+      display: flex; align-items: center; gap: .45rem;
+      background: none; border: none; cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+      font-size: .9rem; font-weight: 700; color: var(--text-mid);
+      transition: color .2s;
+    }
+    .logout-btn:hover { color: var(--purple); }
+    .logout-btn svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.8; }
+
+
+.hero-section{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+
+  margin-top:-70px;
+  position:relative;
+  z-index:1;
+}
+
+.bottom-text{
+  font-family:'DM Serif Display', serif;
+  font-size:30px;
+  font-weight:500px;
+  color:#222;
+  line-height:1.2;
+}
+
+.bottom-text{
+  margin-top:-120px;
+  margin-right:380px;
+}
+
+.hero-image{
+  width:490px;
+  height:auto;
+  object-fit:contain;
+  margin-top:-20px;
+  
+  opacity:0.60;
+
+  filter:
+  brightness(0.92)
+  saturate(0.85);
+
+  transition:.3s ease;
+}
+
+.hero-image:hover{
+  opacity:0.9;
+  transform:scale(1.03);
+}
+
+
+.eye{
+  position: absolute;
+  width: 10px;
+  height: 15px;
+  background: #181818;
+  border-radius: 50%;
+  z-index: 999;
+  transition: transform .08s ease-out;
+}
+.eye-left{
+  top: 60px;
+  left: 365px;
+}
+.eye-right{
+  top: 60px;
+  right: 335px;
+}
+
+    
+
+    .input-wrap {
+      position: relative; z-index: 1;
+      background: #fff; border: 1.5px solid #ede9f6; border-radius: 1.5rem;
+      padding: 1rem 1rem 1rem 1.2rem;
+      display: flex; align-items: center; gap: .75rem;
+      box-shadow: 0 8px 32px rgba(168,85,247,.10);
+      margin-bottom: 1.2rem;
+    }
+    .input-add {
+      width: 28px; height: 28px; border: none; background: none; cursor: pointer;
+      color: var(--text-muted); font-size: 1.4rem; line-height: 1;
+      display: flex; align-items: center; justify-content: center;
+      transition: color .2s;
+    }
+    .input-add:hover { color: var(--purple); }
+    .input-field {
+      flex: 1; border: none; outline: none;
+      font-family: 'Nunito', sans-serif; font-size: .95rem;
+      color: var(--text-dark); background: transparent;
+    }
+    .input-field::placeholder { color: var(--text-muted); }
+    .send-btn {
+      width: 42px; height: 42px; border-radius: 12px;
+      background: linear-gradient(135deg, #c084fc, #a855f7);
+      border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 4px 14px rgba(168,85,247,.35);
+      transition: transform .15s, box-shadow .15s;
+    }
+    .send-btn:hover { transform: scale(1.07); box-shadow: 0 6px 20px rgba(168,85,247,.5); }
+    .send-btn svg { width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 2.5; }
+
+    .action-pills { position: relative; z-index: 1; display: flex; gap: .75rem; }
+    .pill {
+      flex: 1; padding: .78rem .5rem;
+      background: var(--pink-btn); border: none; border-radius: 3rem;
+      font-family: 'Nunito', sans-serif; font-size: .85rem; font-weight: 700;
+      color: var(--text-dark); cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: .42rem;
+      transition: background .2s, transform .15s;
+    }
+    .pill:hover { background: #f5aece; transform: translateY(-2px); }
+    .pill svg { width: 16px; height: 16px; stroke: var(--text-dark); fill: none; stroke-width: 1.8; flex-shrink: 0; }
+  </style>
+</head>
+<body>
+  
+
+<div class="app-shell">
+
+  <aside class="sidebar">
+     <div class="logo">
+      <img src="logo.png" alt="NeXa Logo">
+      <span class="logo-text">NeXa</span>
+    </div>
+    
+
+    <ul class="nav">
+      <li class="nav-item active" onclick="window.location.href='main.html'">
+        <svg class="nav-icon" viewBox="0 0 24 24">
+          <path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/>
+          <path d="M9 21V12h6v9"/>
+        </svg>
+        Home
+      </li>
+      <li class="nav-item" onclick="window.location.href='chat.html?tab=chat'">
+        <svg class="nav-icon" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="9"/>
+          <line x1="12" y1="8" x2="12" y2="12"/>
+          <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        New Chat
+      </li>
+      <li class="nav-item" onclick="window.location.href='chat.html?tab=projects'">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+        </svg>
+        Projects
+      </li>
+      <li class="nav-item" onclick="window.location.href='chat.html?tab=recent'">
+        <svg class="nav-icon" viewBox="0 0 24 24">
+          <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+        </svg>
+        Recent
+      </li>
+    </ul>
+
+    <div class="profile">
+      <span class="profile-label">Profile</span>
+      <div class="avatar">
+        <svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
+          <rect width="36" height="36" fill="#f472b6"/>
+          <circle cx="18" cy="14" r="7" fill="white" fill-opacity=".9"/>
+          <path d="M4 34c0-7.732 6.268-14 14-14s14 6.268 14 14" fill="white" fill-opacity=".9"/>
+        </svg>
+      </div>
+    </div>
+  </aside>
+
+
+  <main class="main">
+
+  
+    <div class="topbar">
+      <div>
+        <div class="greeting-title">Good Morning 🌸</div>
+        <div class="greeting-sub">Ready to make today productive?</div>
+      </div>
+    
+      <button class="logout-btn">
+        <svg viewBox="0 0 24 24">
+          <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
+          <polyline points="16 17 21 12 16 7"/>
+          <line x1="21" y1="12" x2="9" y2="12"/>
+        </svg>
+        Logout
+      </button>
+    </div>
+
+    <div class="hero-section">
+
+  <div class="robot-wrap">
+    <img
+      src="bg.png"
+      alt="NeXa AI"
+      class="hero-image">
+
+    <div class="eye eye-left"></div>
+    <div class="eye eye-right"></div>
+  </div>
+
+  <div class="hero-text">
+    <h1 class="bottom-text">
+      <span>Hey buddy !!!</span><br>
+      <span>What's on your mind?</span>
+    </h1>
+  </div>
+
+
+    </div>
+    
+    
+    <!-- File Preview Badge -->
+    <div id="file-preview-badge" style="display:none; align-items:center; gap:6px; background:var(--pink-bg); border:1px solid rgba(168,85,247,0.3); border-radius:10px; padding:4px 8px; margin-bottom:8px; font-size:0.75rem; color:var(--purple); width:fit-content; margin-left: 20px;">
+      <i class="fas fa-paperclip"></i>
+      <span id="file-preview-name">file.jpg</span>
+      <i class="fas fa-times" id="btn-remove-file" style="cursor:pointer; color:#ef4444; margin-left:4px;"></i>
+    </div>
+
+    <div class="input-wrap">
+      <button class="input-add" id="btn-add-file" aria-label="Add">+</button>
+      <input type="file" id="file-uploader" style="display:none">
+      <input class="input-field" type="text" placeholder="Ask NeXa anything....." aria-label="Chat input"/>
+      <button class="send-btn" aria-label="Send" onclick="goToChat()">
+        <svg viewBox="0 0 24 24">
+          <line x1="5" y1="12" x2="19" y2="12"/>
+          <polyline points="12 5 19 12 12 19"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="action-pills">
+      <button class="pill" id="pill-image">
+        <svg viewBox="0 0 24 24">
+          <rect x="3" y="3" width="18" height="18" rx="2"/>
+          <circle cx="8.5" cy="8.5" r="1.5"/>
+          <polyline points="21 15 16 10 5 21"/>
+        </svg>
+        Create image
+      </button>
+
+      <button class="pill" id="pill-write">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 20h9"/>
+          <path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/>
+        </svg>
+        write or edit
+      </button>
+
+      <button class="pill" id="pill-lookup">
+        <svg viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="2" y1="12" x2="22" y2="12"/>
+          <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10A15.3 15.3 0 0112 2z"/>
+        </svg>
+        look something up
+      </button>
+    </div>
+
+  </main>
+
+</div>
+<script>
+  const eyes = document.querySelectorAll(".eye");
+  
+  document.addEventListener("mousemove", (e) => {
+  
+    eyes.forEach((eye) => {
+  
+      const rect = eye.getBoundingClientRect();
+  
+      const eyeCenterX =
+        rect.left + rect.width / 2;
+  
+      const eyeCenterY =
+        rect.top + rect.height / 2;
+  
+      const deltaX =
+        e.clientX - eyeCenterX;
+  
+      const deltaY =
+        e.clientY - eyeCenterY;
+
+      const moveX =
+        Math.max(-3,
+        Math.min(3, deltaX / 25));
+  
+      const moveY =
+        Math.max(-3,
+        Math.min(3, deltaY / 25));
+  
+      eye.style.transform = `translate(${moveX}px, ${moveY}px)`;
+    });
+  
+  });
+
+    </script>
+    </script>
+
+    <script>
+    // Authentication Check
+    const token = localStorage.getItem('nexa_token');
+    const email = localStorage.getItem('nexa_email');
+    if (!token) {
+      window.location.href = "login.html";
+    } else {
+      // Display user email prefix
+      const profileLabel = document.querySelector(".profile-label");
+      if (profileLabel && email) {
+        profileLabel.textContent = email.split('@')[0];
+      }
+    }
+
+    function goToChat() {
+      const q = document.querySelector(".input-field").value.trim();
+      const fileUploader = document.getElementById('file-uploader');
+      
+      if (fileUploader && fileUploader.files.length > 0) {
+        localStorage.setItem('nexa_attached_file', fileUploader.files[0].name);
+      } else {
+        localStorage.removeItem('nexa_attached_file');
+      }
+      
+      if (q) window.location.href = "chat.html?q=" + encodeURIComponent(q);
+      else window.location.href = "chat.html";
+    }
+    document.querySelector(".input-field").addEventListener("keydown", function(e) {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        goToChat();
+      }
+    });
+
+    // File Uploader logic
+    const btnAddFile = document.getElementById('btn-add-file');
+    const fileUploader = document.getElementById('file-uploader');
+    const filePreviewBadge = document.getElementById('file-preview-badge');
+    const filePreviewName = document.getElementById('file-preview-name');
+    const btnRemoveFile = document.getElementById('btn-remove-file');
+
+    if (btnAddFile && fileUploader) {
+      btnAddFile.onclick = () => fileUploader.click();
+      
+      fileUploader.onchange = () => {
+        if (fileUploader.files.length > 0) {
+          filePreviewName.textContent = fileUploader.files[0].name;
+          filePreviewBadge.style.display = 'flex';
+        }
+      };
+    }
+
+    if (btnRemoveFile && fileUploader) {
+      btnRemoveFile.onclick = () => {
+        fileUploader.value = '';
+        filePreviewBadge.style.display = 'none';
+        localStorage.removeItem('nexa_attached_file');
+      };
+    }
+
+    // Action Pills logic
+    const inputField = document.querySelector(".input-field");
+    const pillImage = document.getElementById('pill-image');
+    const pillWrite = document.getElementById('pill-write');
+    const pillLookup = document.getElementById('pill-lookup');
+
+    if (inputField) {
+      if (pillImage) {
+        pillImage.onclick = () => {
+          inputField.value = "Create an image of ";
+          inputField.focus();
+        };
+      }
+      if (pillWrite) {
+        pillWrite.onclick = () => {
+          inputField.value = "Write a summary of ";
+          inputField.focus();
+        };
+      }
+      if (pillLookup) {
+        pillLookup.onclick = () => {
+          inputField.value = "Look up information about ";
+          inputField.focus();
+        };
+      }
+    }
+
+    // Logout Action
+    document.querySelector(".logout-btn").addEventListener("click", () => {
+      localStorage.removeItem('nexa_token');
+      localStorage.removeItem('nexa_email');
+      localStorage.removeItem('nexa_attached_file');
+      window.location.href = "login.html";
+    });
+    </script>
+    
+    </body>
+</body>
+</html>

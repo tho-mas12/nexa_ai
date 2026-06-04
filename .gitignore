@@ -1,0 +1,17 @@
+# Environment variables (Secrets)
+.env
+*.env
+main project/main project/.env
+
+# Python caching
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Node.js
+node_modules/
+package-lock.json
+
+# Local IDE configuration
+.vscode/
+.idea/
