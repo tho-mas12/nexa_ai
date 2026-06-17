@@ -123,11 +123,11 @@ loginForm.addEventListener("submit", async function(e) {
     }
 
     // Save token and email
-    localStorage.setItem('nexa_token', data.token);
-    localStorage.setItem('nexa_email', data.email);
+    localStorage.setItem('friday_token', data.token);
+    localStorage.setItem('friday_email', data.email);
 
     setTimeout(() => {
-      loginBtn.innerHTML = "Welcome to NeXa ✨";
+      loginBtn.innerHTML = "Welcome to Friday AI ✨";
     }, 1500);
 
     setTimeout(() => {
@@ -137,7 +137,7 @@ loginForm.addEventListener("submit", async function(e) {
   } catch (error) {
     logoSpin.classList.remove("spinning");
     loginBtn.disabled = false;
-    loginBtn.innerHTML = "Log in to NeXa";
+    loginBtn.innerHTML = "Log in to Friday AI";
     loginBtn.style.opacity = "1";
     alert("Login Error: " + error.message);
   }

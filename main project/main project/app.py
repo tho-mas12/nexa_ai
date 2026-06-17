@@ -16,10 +16,10 @@ app = Flask(__name__, static_folder='.', static_url_path='')
 CORS(app)
 
 # MongoDB Configuration
-MONGODB_URI = os.getenv("MONGODB_URI", "mongodb://localhost:27017/nexa-db")
+MONGODB_URI = os.getenv("MONGODB_URI", "mongodb://localhost:27017/friday-db")
 client = MongoClient(MONGODB_URI)
 
-def get_database_name(uri, default="nexa-db"):
+def get_database_name(uri, default="friday-db"):
     try:
         path = uri.split("://", 1)[-1]
         if "/" in path:
@@ -35,7 +35,7 @@ db_name = get_database_name(MONGODB_URI)
 db = client[db_name]
 
 # JWT Secret
-JWT_SECRET = os.getenv("JWT_SECRET", "nexa_jwt_secret_key_2026_super_secure")
+JWT_SECRET = os.getenv("JWT_SECRET", "friday_jwt_secret_key_2026_super_secure")
 
 # ── JWT AUTH DECORATOR ──
 def token_required(f):
@@ -61,6 +61,10 @@ def token_required(f):
         
         return f(current_user, *args, **kwargs)
     return decorated
+
+@app.route('/health')
+def health_check():
+    return jsonify({'status': 'healthy', 'timestamp': datetime.datetime.utcnow().isoformat()}), 200
 
 # ── SERVE FRONTEND STATIC FILES ──
 @app.route('/')
@@ -341,18 +345,18 @@ def api_chat_message(current_user):
             groq_api_key = os.getenv("GROQ_API_KEY")
             
             if not groq_api_key or groq_api_key == 'gsk_your_actual_groq_api_key_here' or groq_api_key.strip() == '':
-                ai_response = "NeXa is ready! Please configure your **GROQ_API_KEY** in the `.env` file of your project backend to start chatting with me."
+                ai_response = "Friday AI is ready! Please configure your **GROQ_API_KEY** in the `.env` file of your project backend to start chatting with me."
             else:
                 # Prepare conversation history for LLM
                 system_prompt = {
                     'role': 'system',
-                    'content': 'You are NeXa, a smart, friendly, and helpful AI study companion. Answer user queries clearly, concisely, and accurately using beautiful markdown layout. Use emojis where appropriate to keep it engaging.'
+                    'content': 'You are Friday AI, a smart, friendly, and helpful AI assistant. Answer user queries clearly, concisely, and accurately using beautiful markdown layout. Use emojis where appropriate to keep it engaging.'
                 }
                 
                 messages_for_groq = [system_prompt]
                 for m in session.get('messages', []):
                     messages_for_groq.append({
-                        'role': 'assistant' if m['role'] == 'nexa' else 'user',
+                        'role': 'assistant' if m['role'] in ['nexa', 'friday'] else 'user',
                         'content': m['content']
                     })
                 
@@ -391,7 +395,7 @@ def api_chat_message(current_user):
 
         # Append AI Message to Database
         ai_msg = {
-            'role': 'nexa',
+            'role': 'friday',
             'content': ai_response,
             'timestamp': datetime.datetime.utcnow()
         }
@@ -416,5 +420,5 @@ def api_chat_message(current_user):
 if __name__ == '__main__':
     port = int(os.getenv("PORT", 5000))
     # We set host to 0.0.0.0 to listen on all interfaces
-    print(f"NeXa Flask Server starting at http://localhost:{port}")
+    print(f"Friday AI Flask Server starting at http://localhost:{port}")
     app.run(host='0.0.0.0', port=port, debug=True)
